@@ -30,7 +30,7 @@ public class HousePlacer : MonoBehaviour
         Vector3 mousePosition = Input.mousePosition;
         mousePosition.z = 10f; 
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
-
+        worldPosition.z += 3f;
         transform.position = worldPosition;
     }
 
@@ -49,6 +49,7 @@ public class HousePlacer : MonoBehaviour
                 cell.isOccupied = true; 
                 GetComponent<SpawnStats>().PlaceHouse();
                 isPlacing = false;      
+                GameManager.Instance.HousePlaced();
                 Debug.Log("Дом успешно размещен!");
             }
         }

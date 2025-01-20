@@ -58,29 +58,16 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 24059141fb0001241b3c71f4078f1408, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6937610087113382788}
+      addedObject: {fileID: -8052998214865950730}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 24059141fb0001241b3c71f4078f1408, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -8052998214865950730}
+      addedObject: {fileID: 6937610087113382788}
   m_SourcePrefab: {fileID: 100100000, guid: 24059141fb0001241b3c71f4078f1408, type: 3}
 --- !u!1 &7423634325840878559 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 24059141fb0001241b3c71f4078f1408, type: 3}
   m_PrefabInstance: {fileID: 7766287990785664654}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6937610087113382788
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7423634325840878559}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21fce165098b542469bfb44561b4fdce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  statPanelPrefab: {fileID: 8660945898549964543, guid: 3b57b92cdf20da4498124db66f595501, type: 3}
 --- !u!65 &-8052998214865950730
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -102,3 +89,17 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.018, y: 0.018999998, z: 0.0058920737}
   m_Center: {x: 4.656613e-10, y: 0.0005, z: 0.0065445085}
+--- !u!114 &6937610087113382788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7423634325840878559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21fce165098b542469bfb44561b4fdce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statPanelPrefab: {fileID: 7258353760615933375, guid: 2f5eab5c9cc4a904bb3e819e2b7103ac, type: 3}
+  statsPanelAnim: {fileID: 2958317839432420858, guid: 2f5eab5c9cc4a904bb3e819e2b7103ac, type: 3}

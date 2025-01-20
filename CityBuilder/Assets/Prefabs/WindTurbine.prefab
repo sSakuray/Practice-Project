@@ -61,7 +61,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: af82eb2222aaa8e4e9a883814c1e6cae, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 9071959597394116090}
+      addedObject: {fileID: 1753044503547801257}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: af82eb2222aaa8e4e9a883814c1e6cae, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -6692990114321555976}
   m_SourcePrefab: {fileID: 100100000, guid: af82eb2222aaa8e4e9a883814c1e6cae, type: 3}
 --- !u!4 &6024635172803361618 stripped
 Transform:
@@ -73,7 +76,28 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: af82eb2222aaa8e4e9a883814c1e6cae, type: 3}
   m_PrefabInstance: {fileID: 6057751309274700985}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &9071959597394116090
+--- !u!65 &1753044503547801257
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6399647409633550824}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.006, y: 0.0060000014, z: 0.016335802}
+  m_Center: {x: 0, y: 0, z: 0.011881711}
+--- !u!114 &-6692990114321555976
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -82,38 +106,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6399647409633550824}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37ce05b42be205d42808a2a5391eb401, type: 3}
+  m_Script: {fileID: 11500000, guid: 21fce165098b542469bfb44561b4fdce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxTiers: 4
-  buildingCost: 100
-  buildingNameTier1: WIND TURBINE
-  citizensProductionTier1: 0
-  energyProductionTier1: 100
-  energyConsumeTier1: 0
-  CitizenConsumeTier1: 0
-  passiveIncomeTier1: 0
-  upgradeToTier2Cost: 1000
-  buildingNameTier2: test
-  citizensProductionTier2: 100
-  energyProductionTier2: 100
-  energyConsumeTier2: 100
-  citizenConsumeTier2: 100
-  passiveIncomeTier2: 100
-  upgradeToTier3Cost: 100
-  buildingNameTier3: test
-  citizensProductionTier3: 100
-  energyProductionTier3: 100
-  energyConsumeTier3: 100
-  citizenConsumeTier3: 100
-  passiveIncomeTier3: 100
-  upgradeToTier4Cost: 100
-  buildingNameTier4: test
-  citizensProductionTier4: 100
-  energyProductionTier4: 100
-  energyConsumeTier4: 100
-  citizenConsumeTier4: 100
-  passiveIncomeTier4: 100
+  statPanelPrefab: {fileID: 7258353760615933375, guid: 2f5eab5c9cc4a904bb3e819e2b7103ac, type: 3}
+  statsPanelAnim: {fileID: 2958317839432420858, guid: 2f5eab5c9cc4a904bb3e819e2b7103ac, type: 3}
 --- !u!1001 &8122728052758157463
 PrefabInstance:
   m_ObjectHideFlags: 0
