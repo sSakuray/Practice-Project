@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public float money = 1000f;
-    public LayerMask panelLayer; // Слой панелей травы
+    public LayerMask panelLayer;
 
     private void Awake()
     {
@@ -20,7 +20,6 @@ public class GameManager : MonoBehaviour
     {
         GameObject house = Instantiate(housePrefab);
 
-        // Добавляем HousePlacer и настраиваем слой панелей
         HousePlacer housePlacer = house.AddComponent<HousePlacer>();
         housePlacer.panelLayer = panelLayer;
         housePlacer.StartPlacingHouse();

@@ -47,6 +47,7 @@ public class HousePlacer : MonoBehaviour
             {
                 transform.position = hit.collider.transform.position;
                 cell.isOccupied = true; 
+                GetComponent<SpawnStats>().PlaceHouse();
                 isPlacing = false;      
                 Debug.Log("Дом успешно размещен!");
             }
