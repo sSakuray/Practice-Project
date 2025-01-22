@@ -8,12 +8,12 @@ public class ShopManager : MonoBehaviour
     [System.Serializable]
     public class HouseData
     {
-        public GameObject housePrefab; // Префаб дома
-        public Button buyButton; // Кнопка покупки
-        public float price; // Цена дома
+        public GameObject housePrefab; 
+        public Button buyButton;
+        public float price; 
     }
 
-    [SerializeField] private List<HouseData> houses; // Список всех домов
+    [SerializeField] private List<HouseData> houses; 
 
     private void Start()
     {
@@ -24,25 +24,34 @@ public class ShopManager : MonoBehaviour
         }
     }
 
+    public float GetHousePrice(GameObject housePrefab)
+    {
+        foreach (var houseData in houses)
+        {
+            if (houseData.housePrefab == housePrefab)
+            {
+                return houseData.price;
+            }
+        }
+        return 0f;
+    }
+
     private void OnBuyClicked(HouseData houseData)
     {
         if (GameManager.Instance.money < houseData.price)
         {
             StartCoroutine(MakeButtonFlash(houseData.buyButton, Color.red));
-            Debug.Log($"Не хватает денег на дом {houseData.housePrefab?.name}. Цена: {houseData.price}, Баланс: {GameManager.Instance.money}");
             return;
         }
 
         if (GameManager.Instance.isHouseBeingPlaced)
         {
-            Debug.LogWarning("Нельзя купить новый дом, пока текущий не размещен!");
             return;
         }
 
         StartCoroutine(MakeButtonFlash(houseData.buyButton, Color.green));
         GameManager.Instance.money -= houseData.price;
         GameManager.Instance.SpawnHouse(houseData.housePrefab);
-        Debug.Log($"Дом {houseData.housePrefab.name} куплен!");
     }
 
     private IEnumerator MakeButtonFlash(Button button, Color flashColor)

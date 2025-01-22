@@ -17,23 +17,21 @@ public class PanCamera : MonoBehaviour
     public enum RotateMethod { Mouse, Touch };
     [Tooltip("How do you like to rotate the camera")]
     public RotateMethod rotateMethod = RotateMethod.Mouse;
-    [SerializeField] private float zoomSpeed = 6f; // Speed of zooming
-    [SerializeField] private float minZoom = 40f; // Minimum zoom level
-    [SerializeField] private float maxZoom = 120f; // Maximum zoom level
+    [SerializeField] private float zoomSpeed = 6f; 
+    [SerializeField] private float minZoom = 40f;
+    [SerializeField] private float maxZoom = 120f; 
     [SerializeField] private float targetXRotation = 20f;
 
 
-    private Vector2 swipeDirection; //swipe delta vector2
-    private Quaternion cameraRot; // store the quaternion after the slerp operation
+    private Vector2 swipeDirection;
+    private Quaternion cameraRot; 
     private Touch touch;
     private float distanceBetweenCameraAndTarget;
 
-    private float minXRotAngle = 20; //min angle around x axis
-    private float maxXRotAngle  = 89; // max angle around x axis
-
-    //Mouse rotation related
-    private float rotX; // around x
-    private float rotY; // around y
+    private float minXRotAngle = 20; 
+    private float maxXRotAngle  = 89; 
+    private float rotX;
+    private float rotY; 
     private void Awake()
     {
         if (mainCamera == null)
@@ -43,20 +41,18 @@ public class PanCamera : MonoBehaviour
 
         
     }
-    // Start is called before the first frame update
     void Start()
     {
         distanceBetweenCameraAndTarget = Vector3.Distance(mainCamera.transform.position, target.position);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (rotateMethod == RotateMethod.Mouse)
         {
             if (Input.GetMouseButton(0))
             {
-                rotX += -Input.GetAxis("Mouse Y") * mouseRotateSpeed; // around X
+                rotX += -Input.GetAxis("Mouse Y") * mouseRotateSpeed; 
                 rotY += Input.GetAxis("Mouse X") * mouseRotateSpeed;
             }
 
@@ -76,7 +72,6 @@ public class PanCamera : MonoBehaviour
                 touch = Input.GetTouch(0);
                 if (touch.phase == TouchPhase.Began)
                 {
-                    //Debug.Log("Touch Began");
 
                 }
                 else if (touch.phase == TouchPhase.Moved)
@@ -85,7 +80,6 @@ public class PanCamera : MonoBehaviour
                 }
                 else if (touch.phase == TouchPhase.Ended)
                 {
-                    //Debug.Log("Touch Ended");
                 }
             }
 
@@ -99,7 +93,6 @@ public class PanCamera : MonoBehaviour
             }
         }
 
-        //Camera Zoom in and out
         mainCamera.orthographicSize -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
 
         if (mainCamera.orthographicSize  <= minZoom)
@@ -123,29 +116,26 @@ public class PanCamera : MonoBehaviour
     }
     private void SetLocalXRotation(float xRotation) //NOT WORKS
     {
-        // Create a new rotation vector with the specified local X rotation
         Vector3 currentRotation = transform.localEulerAngles;
-        currentRotation.x = xRotation; // Set the X rotation
-
-        // Apply the new local rotation to the camera
+        currentRotation.x = xRotation;
         mainCamera.transform.localEulerAngles = currentRotation;
     }
 
     private void LateUpdate()
     {
 
-        Vector3 dir = new Vector3(0, 0, -distanceBetweenCameraAndTarget); //assign value to the distance between the maincamera and the target
+        Vector3 dir = new Vector3(0, 0, -distanceBetweenCameraAndTarget);
 
-        Quaternion newQ; // value equal to the delta change of our mouse or touch position
+        Quaternion newQ; 
         if (rotateMethod == RotateMethod.Mouse)
         {
-           newQ  = Quaternion.Euler(rotX , rotY, 0); //We are setting the rotation around X, Y, Z axis respectively
+           newQ  = Quaternion.Euler(rotX , rotY, 0); 
         }
         else
         {
             newQ = Quaternion.Euler(swipeDirection.y , -swipeDirection.x, 0);
         }
-        cameraRot = Quaternion.Slerp(cameraRot, newQ, slerpValue);  //let cameraRot value gradually reach newQ which corresponds to our touch
+        cameraRot = Quaternion.Slerp(cameraRot, newQ, slerpValue);  
         mainCamera.transform.position = target.position + cameraRot * dir;
         mainCamera.transform.LookAt(target.position);
 

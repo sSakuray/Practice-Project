@@ -26,6 +26,7 @@ public class SpawnStats : MonoBehaviour
         if (spawnedStatPanel != null)
         {
             Destroy(spawnedStatPanel);
+            spawnedStatPanel = null;
         }
         else
         {
@@ -48,6 +49,18 @@ public class SpawnStats : MonoBehaviour
         }
 
         spawnedStatPanel = Instantiate(statPanelPrefab, canvas.transform);
+        HouseActions houseActions = spawnedStatPanel.GetComponent<HouseActions>();
+        if (houseActions != null)
+        {
+            ShopManager shopManager = FindObjectOfType<ShopManager>();
+            if (shopManager != null)
+            {
+                float housePrice = shopManager.GetHousePrice(originalPrefab);
+                houseActions.SetCurrentHouse(gameObject, housePrice);
+                houseActions.statPanel = spawnedStatPanel;
+            }
+        }
+        
 
 
         RectTransform rectTransform = spawnedStatPanel.GetComponent<RectTransform>();
@@ -61,30 +74,28 @@ public class SpawnStats : MonoBehaviour
             HouseManager houseManager = FindObjectOfType<HouseManager>();
             if (houseManager == null)
             {
-                Debug.LogError("HouseManager not found!");
                 return;
             }
 
             HouseManager.HouseData houseData = houseManager.GetHouseData(originalPrefab);
             if (houseData !=null)
             {
-
-                Debug.Log($"Полученные данные дома: Жители = {houseData.citizens}, Энергия = {houseData.energy}, Доход = {houseData.income}");
                 StatsCard statsCard = spawnedStatPanel.GetComponent<StatsCard>();
                 if (statsCard != null)
                 {
-                    statsCard.UpdateStats(houseData.citizens, houseData.energy, houseData.income);
-                }
-                else
-                {
-                    Debug.LogError("StatsCard not found!");
+                    statsCard.UpdateStats(houseData.houseName, houseData.citizens, houseData.energy, houseData.income);
                 }
             
             }
-            else
-            {
-                Debug.LogWarning($"Данные для дома {gameObject.name} не найдены!");
-            }
+        }
+    }
+    public GridCell AssociatedCell { get; set; }
+
+    private void OnDestroy()
+    {
+        if (AssociatedCell != null)
+        {
+            AssociatedCell.isOccupied = false;
         }
     }
 }

@@ -3436,7 +3436,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 963194228}
-  rotationPoint: {fileID: 0}
+  rotationPoint: {fileID: 1424545626}
 --- !u!1 &1049045080
 GameObject:
   m_ObjectHideFlags: 0
@@ -3485,7 +3485,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbfe76c91314ecd4a9223c15312ed457, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  money: 1000
+  money: 1000000
   panelLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -3572,32 +3572,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   houses:
   - housePrefab: {fileID: 939303671511055434, guid: 8940195d867bc744e9c383c2c803a49d, type: 3}
+    houseName: House
     citizens: 1
     energy: 50
     income: 100
   - housePrefab: {fileID: 7423634325840878559, guid: 8f1b9927db8573442a061275e89e8eae, type: 3}
+    houseName: Shop
     citizens: 5
     energy: 250
     income: 2500
   - housePrefab: {fileID: 6399647409633550824, guid: 84753e87208614641ba90cf724978824, type: 3}
+    houseName: Wind Turbine
     citizens: 10
     energy: 1000
     income: 10000
   - housePrefab: {fileID: 166466687111817804, guid: a49794ae29f85074f949af5fabfa88e3, type: 3}
-    citizens: 15
-    energy: 1500
+    houseName: Straight Road
+    citizens: 0
+    energy: 0
     income: 15000
   - housePrefab: {fileID: 4597341443649809608, guid: 8448103d2a471a04eb6cd5a0856df083, type: 3}
-    citizens: 2323
-    energy: 341245
+    houseName: Corner Road
+    citizens: 0
+    energy: 0
     income: 625356
   - housePrefab: {fileID: 814826310091267804, guid: 4cb30e0c8459f644a872d12ad4b9e236, type: 3}
+    houseName: TRoad
     citizens: 0
     energy: 0
     income: 0
   - housePrefab: {fileID: 5604227539250767165, guid: 3f45a1384ab819249913ac9e065134e6, type: 3}
-    citizens: 111
-    energy: 11111
+    houseName: XRoad
+    citizens: 0
+    energy: 0
     income: 1111111
 --- !u!1 &1060199959 stripped
 GameObject:

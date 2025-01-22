@@ -1326,7 +1326,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8467766108494689130}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: HouseActions, Assembly-CSharp
+        m_MethodName: UpgradeHouse
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6201112058934470798
 GameObject:
   m_ObjectHideFlags: 0
@@ -1580,7 +1592,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3570434690654548181}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: HouseActions, Assembly-CSharp
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6634898627067167466
 GameObject:
   m_ObjectHideFlags: 0
@@ -1700,7 +1724,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 466639098393782157}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: HouseActions, Assembly-CSharp
+        m_MethodName: RotateHouse
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6905254929522437699
 GameObject:
   m_ObjectHideFlags: 0
@@ -1750,6 +1786,7 @@ GameObject:
   - component: {fileID: 6693748992131337165}
   - component: {fileID: 2958317839432420858}
   - component: {fileID: -4506453783981145765}
+  - component: {fileID: 8415784014666066014}
   m_Layer: 5
   m_Name: BuildingInfo
   m_TagString: Untagged
@@ -1813,9 +1850,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b71825834cb6655459c8d7125ffb0861, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  houseNameText: {fileID: 6258673454829039784}
   citizensText: {fileID: 4269258483601272869}
   energyText: {fileID: 5488453668918027759}
   incomeText: {fileID: 2864803663701768519}
+--- !u!114 &8415784014666066014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7258353760615933375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4406cca4f67bb54b89ebe76af7cfd41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upgradeButton: {fileID: 3536348497784848333}
+  rotateButton: {fileID: 778482491669662860}
+  deleteButton: {fileID: 2317059898418946203}
+  statPanel: {fileID: 0}
+  upgradeOptions:
+  - currentPrefab: {fileID: 939303671511055434, guid: 8940195d867bc744e9c383c2c803a49d, type: 3}
+    upgradedPrefab: {fileID: 7423634325840878559, guid: 8f1b9927db8573442a061275e89e8eae, type: 3}
+    upgradeCost: 500
 --- !u!1 &7499028270870717484
 GameObject:
   m_ObjectHideFlags: 0

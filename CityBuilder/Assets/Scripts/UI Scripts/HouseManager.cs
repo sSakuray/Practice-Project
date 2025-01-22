@@ -8,6 +8,7 @@ public class HouseManager : MonoBehaviour
     public class HouseData
     {
         public GameObject housePrefab;
+        public string houseName;
         public int citizens;
         public int energy;
         public int income;

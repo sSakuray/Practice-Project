@@ -47,10 +47,15 @@ public class HousePlacer : MonoBehaviour
             {
                 transform.position = hit.collider.transform.position;
                 cell.isOccupied = true; 
+                var houseComponent = GetComponent<SpawnStats>();
+                if (houseComponent != null)
+                {
+                    houseComponent.AssociatedCell = cell;
+                }
+
                 GetComponent<SpawnStats>().PlaceHouse();
                 isPlacing = false;      
                 GameManager.Instance.HousePlaced();
-                Debug.Log("Дом успешно размещен!");
             }
         }
     }
