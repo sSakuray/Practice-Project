@@ -55,5 +55,52 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ddf7b5546ef28304f849c6c4da6121bb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -5303147316067715761}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ddf7b5546ef28304f849c6c4da6121bb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4988519898745220854}
   m_SourcePrefab: {fileID: 100100000, guid: ddf7b5546ef28304f849c6c4da6121bb, type: 3}
+--- !u!1 &2117556170072946733 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ddf7b5546ef28304f849c6c4da6121bb, type: 3}
+  m_PrefabInstance: {fileID: 1270714177772537212}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-5303147316067715761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2117556170072946733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21fce165098b542469bfb44561b4fdce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statPanelPrefab: {fileID: 7258353760615933375, guid: 2f5eab5c9cc4a904bb3e819e2b7103ac, type: 3}
+  statsPanelAnim: {fileID: 0}
+  originalPrefab: {fileID: 0}
+--- !u!65 &4988519898745220854
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2117556170072946733}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.0019999999, y: 0.0019999999, z: 0.0056072553}
+  m_Center: {x: 1.1641532e-10, y: 4.0745363e-10, z: 0.004653628}

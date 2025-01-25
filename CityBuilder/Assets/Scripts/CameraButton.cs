@@ -11,7 +11,6 @@ public class CameraButton : MonoBehaviour
     private Vector3 targetRotation = new Vector3(45f, -45f, 0f);
     private Vector3 targetRotation2 = new Vector3(89f, 0f, 0f);
     private Vector3 targetPosition = new Vector3(30f, 0f, -29f);
-
     public void Click ()
     {
         if (click == 0)

@@ -1,61 +1,61 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class HouseActions : MonoBehaviour
 {
-    [SerializeField] private Button upgradeButton; 
-    [SerializeField] private Button rotateButton;  
-    [SerializeField] private Button deleteButton;   
-    [SerializeField] public GameObject statPanel; 
-
-
+    [SerializeField] private Button upgradeButton;     
+    [SerializeField] private Button rotateButton;      
+    [SerializeField] private Button deleteButton;       
+    [SerializeField] public GameObject statPanel;      
+    [SerializeField] private TextMeshProUGUI priceText;  
+    
     [System.Serializable]
     public class UpgradeOption
     {
-        public GameObject currentPrefab;  
-        public GameObject upgradedPrefab; 
-        public float upgradeCost;  
+        public GameObject currentPrefab;
+        public GameObject upgradedPrefab;
+        public int upgradeCost;   
     }
 
-    [SerializeField] private List<UpgradeOption> upgradeOptions; 
-
-    private GameObject currentHouse; 
-    private float houseCost; 
-
+    [SerializeField] private List<UpgradeOption> upgradeOptions;
+    private GameObject currentHouse;   
+    private int houseCost;   
+    private int totalSpentOnUpgrades = 0;  
     private void Start()
     {
-        if (upgradeButton != null)
-        {
-            upgradeButton.onClick.AddListener(UpgradeHouse);
-        }
-
-        if (rotateButton != null)
-        {
-            rotateButton.onClick.AddListener(RotateHouse);
-        }
-
-        if (deleteButton != null)
-        {
-            deleteButton.onClick.AddListener(DeleteHouse);
-        }
-
+        upgradeButton.onClick.AddListener(UpgradeHouse);
+        rotateButton.onClick.AddListener(RotateHouse);
+        deleteButton.onClick.AddListener(DeleteHouse);
     }
-    
 
-    public void SetCurrentHouse(GameObject house, float cost)
+    public void SetCurrentHouse(GameObject house, int cost)
     {
         currentHouse = house;
         houseCost = cost;
+        UpdateUpgradePrice();
     }
-
-    public void UpgradeHouse()
+    private void UpdateUpgradePrice()
     {
-        if (currentHouse == null)
+        if (priceText == null || currentHouse == null)
         {
             return;
         }
 
+        foreach (var option in upgradeOptions)
+        {
+            if (option.currentPrefab.name == currentHouse.name.Replace("(Clone)", "").Trim())
+            {
+                priceText.text = $"{option.upgradeCost} $";
+                return;
+            }
+        }
+
+        priceText.text = "N/A";
+    }
+    public void UpgradeHouse()
+    {
         foreach (var option in upgradeOptions)
         {
             if (option.currentPrefab.name == currentHouse.name.Replace("(Clone)", "").Trim())
@@ -65,45 +65,49 @@ public class HouseActions : MonoBehaviour
                     Vector3 position = currentHouse.transform.position;
                     Quaternion rotation = currentHouse.transform.rotation;
 
+                    SpawnStats oldSpawnStats = currentHouse.GetComponent<SpawnStats>();
+                    GameObject originalPrefab = null;
+                    GridCell associatedCell = null; 
+                    if (oldSpawnStats != null)
+                    {
+                        originalPrefab = option.upgradedPrefab;
+                        associatedCell = oldSpawnStats.AssociatedCell; 
+                    }
                     Destroy(currentHouse);
+
                     GameObject upgradedHouse = Instantiate(option.upgradedPrefab, position, rotation);
+                    currentHouse = upgradedHouse;
 
-                    GameManager.Instance.money -= option.upgradeCost; 
-                    currentHouse = upgradedHouse; 
+                    GameManager.Instance.money -= option.upgradeCost;
+                    totalSpentOnUpgrades += option.upgradeCost;
 
+                    UpdateUpgradePrice();
+
+                    SpawnStats spawnStats = upgradedHouse.GetComponent<SpawnStats>();
+                    if (spawnStats != null)
+                    {
+                        spawnStats.Initialize(originalPrefab);
+                        spawnStats.AssociatedCell = associatedCell;  
+                        spawnStats.PlaceHouse();  
+
+                        spawnStats.UpdateHousePrice(houseCost + totalSpentOnUpgrades);
+                        Destroy(statPanel);
+                        spawnStats.SpawnStatPanel();
+                    }
+                    return;
                 }
-
-                return;
             }
         }
-
     }
-
     public void RotateHouse()
     {
-        if (currentHouse == null)
-        {
-            return;
-        }
-
         currentHouse.transform.RotateAround(currentHouse.transform.position, Vector3.up, 90);
     }
-
     public void DeleteHouse()
     {
-        GridCell cell = currentHouse.GetComponent<GridCell>();
-        if (currentHouse == null)
-        {
-            return;
-        }
-        if (statPanel != null)
-        {
-            Destroy(statPanel); 
-        }
-
+        GameManager.Instance.money += (int)(houseCost * 0.7);
+        Destroy(statPanel);
         Destroy(currentHouse);
-        currentHouse = null; 
-
-        GameManager.Instance.money += houseCost;
+        currentHouse = null;
     }
 }

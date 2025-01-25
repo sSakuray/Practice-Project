@@ -5,97 +5,100 @@ using UnityEngine;
 public class SpawnStats : MonoBehaviour
 {
     [SerializeField] private GameObject statPanelPrefab; 
-    [SerializeField] private Animator statsPanelAnim;
+    [SerializeField] private Animator statsPanelAnim;    
     [SerializeField] private GameObject originalPrefab;
-    private GameObject spawnedStatPanel; 
-    private bool isPlaced = false; 
-    private bool isPanelOpen = false;
-
+    private static GameObject currentActiveStatPanel; 
+    private GameObject spawnedStatPanel;             
+    private bool isPlaced = false;                   
+    private int currentHousePrice;                  
+    public GridCell AssociatedCell { get; set; }       
     public void Initialize(GameObject prefab)
     {
         originalPrefab = prefab;
+        ShopManager shopManager = FindObjectOfType<ShopManager>();
+        if (shopManager != null)
+        {
+            currentHousePrice = shopManager.GetHousePrice(originalPrefab);
+        }
     }
-
     private void OnMouseDown()
     {
         if (!isPlaced)
         {
             return; 
         }
-
-        if (spawnedStatPanel != null)
+        if (currentActiveStatPanel != null && currentActiveStatPanel == spawnedStatPanel)
         {
-            Destroy(spawnedStatPanel);
-            spawnedStatPanel = null;
+            Destroy(currentActiveStatPanel); 
+            currentActiveStatPanel = null;  
+            return; 
         }
-        else
+        if (currentActiveStatPanel != null)
         {
-            SpawnStatPanel();
-
+            Destroy(currentActiveStatPanel);
+            currentActiveStatPanel = null;
         }
+        SpawnStatPanel();
     }
-
     public void PlaceHouse()
     {
-        isPlaced = true;
+        isPlaced = true; 
+        GameManager.Instance.UpdateStatsOnHousePlaced(originalPrefab);
     }
-
-    private void SpawnStatPanel()
+    public void SpawnStatPanel()
     {
-        Canvas canvas = FindObjectOfType<Canvas>();
+        Canvas canvas = FindObjectOfType<Canvas>(); 
         if (canvas == null)
         {
             return;
         }
-
         spawnedStatPanel = Instantiate(statPanelPrefab, canvas.transform);
+        currentActiveStatPanel = spawnedStatPanel;
+
         HouseActions houseActions = spawnedStatPanel.GetComponent<HouseActions>();
         if (houseActions != null)
         {
-            ShopManager shopManager = FindObjectOfType<ShopManager>();
-            if (shopManager != null)
-            {
-                float housePrice = shopManager.GetHousePrice(originalPrefab);
-                houseActions.SetCurrentHouse(gameObject, housePrice);
-                houseActions.statPanel = spawnedStatPanel;
-            }
+            houseActions.SetCurrentHouse(gameObject, currentHousePrice);
+            houseActions.statPanel = spawnedStatPanel;
         }
-        
-
-
         RectTransform rectTransform = spawnedStatPanel.GetComponent<RectTransform>();
         if (rectTransform != null)
         {
-            rectTransform.anchorMin = new Vector2(0, 0.4f); 
+            rectTransform.anchorMin = new Vector2(0, 0.4f);
             rectTransform.anchorMax = new Vector2(0, 0.4f);
-            rectTransform.pivot = new Vector2(0, 0.4f); 
-            rectTransform.anchoredPosition = new Vector2(0, 0); 
-
-            HouseManager houseManager = FindObjectOfType<HouseManager>();
-            if (houseManager == null)
-            {
-                return;
-            }
-
-            HouseManager.HouseData houseData = houseManager.GetHouseData(originalPrefab);
-            if (houseData !=null)
-            {
-                StatsCard statsCard = spawnedStatPanel.GetComponent<StatsCard>();
-                if (statsCard != null)
-                {
-                    statsCard.UpdateStats(houseData.houseName, houseData.citizens, houseData.energy, houseData.income);
-                }
-            
-            }
+            rectTransform.pivot = new Vector2(0, 0.4f);
+            rectTransform.anchoredPosition = new Vector2(0, 0);
+        }
+        UpdateStatPanel();
+    }
+    public void UpdateStatPanel()
+    {
+        HouseManager houseManager = FindObjectOfType<HouseManager>();
+        HouseManager.HouseData houseData = houseManager.GetHouseData(originalPrefab);
+        StatsCard statsCard = spawnedStatPanel.GetComponent<StatsCard>();
+        if (statsCard != null)
+        {
+            statsCard.UpdateStats(houseData.houseName, houseData.citizens, houseData.energy, houseData.income);
         }
     }
-    public GridCell AssociatedCell { get; set; }
-
+    public void UpdateHousePrice(int newPrice)
+    {
+        currentHousePrice = newPrice;
+    }
     private void OnDestroy()
     {
         if (AssociatedCell != null)
         {
             AssociatedCell.isOccupied = false;
+        }
+        if (spawnedStatPanel != null && spawnedStatPanel == currentActiveStatPanel)
+        {
+            Destroy(currentActiveStatPanel);
+            currentActiveStatPanel = null;
+        }
+        if (isPlaced)
+        {
+            GameManager.Instance.UpdateStatsOnHouseRemoved(originalPrefab);
         }
     }
 }

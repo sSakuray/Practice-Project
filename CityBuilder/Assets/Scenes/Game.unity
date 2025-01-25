@@ -3486,10 +3486,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   money: 1000000
+  totalCitizens: 0
+  totalEnergy: 0
   panelLayer:
     serializedVersion: 2
     m_Bits: 64
   isHouseBeingPlaced: 0
+  quantityMoneyText: {fileID: 1229948433}
+  citizensText: {fileID: 85411785}
+  energyText: {fileID: 193923951}
 --- !u!114 &1049045084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3539,25 +3544,22 @@ MonoBehaviour:
     price: 100
   - housePrefab: {fileID: 7423634325840878559, guid: 8f1b9927db8573442a061275e89e8eae, type: 3}
     buyButton: {fileID: 882284762}
-    price: 1000
+    price: 200
   - housePrefab: {fileID: 6399647409633550824, guid: 84753e87208614641ba90cf724978824, type: 3}
     buyButton: {fileID: 229472905}
-    price: 10000
+    price: 300
   - housePrefab: {fileID: 166466687111817804, guid: a49794ae29f85074f949af5fabfa88e3, type: 3}
     buyButton: {fileID: 1196125465}
-    price: 10000
+    price: 400
   - housePrefab: {fileID: 4597341443649809608, guid: 8448103d2a471a04eb6cd5a0856df083, type: 3}
     buyButton: {fileID: 2001048439}
-    price: 15000
+    price: 500
   - housePrefab: {fileID: 814826310091267804, guid: 4cb30e0c8459f644a872d12ad4b9e236, type: 3}
     buyButton: {fileID: 913612627}
-    price: 20000
+    price: 600
   - housePrefab: {fileID: 5604227539250767165, guid: 3f45a1384ab819249913ac9e065134e6, type: 3}
     buyButton: {fileID: 1761146836}
-    price: 50000
-  - housePrefab: {fileID: 6399647409633550824, guid: 84753e87208614641ba90cf724978824, type: 3}
-    buyButton: {fileID: 229472905}
-    price: 10000
+    price: 700
 --- !u!114 &1049045087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3606,6 +3608,46 @@ MonoBehaviour:
     citizens: 0
     energy: 0
     income: 1111111
+  - housePrefab: {fileID: 1076019684008784579, guid: 06e25c97c43d2264980084f9370fea96, type: 3}
+    houseName: housetier2
+    citizens: 2
+    energy: 2
+    income: 2
+  - housePrefab: {fileID: 6890891646737303306, guid: 7f932d07e66e3cb4080f064b6d68a29f, type: 3}
+    houseName: housetier3
+    citizens: 3
+    energy: 3
+    income: 3
+  - housePrefab: {fileID: 3909753701925984706, guid: 4247215771af2f047803f52a16231f51, type: 3}
+    houseName: housetier4
+    citizens: 4
+    energy: 4
+    income: 4
+  - housePrefab: {fileID: 2117556170072946733, guid: 3e9e31399ac90f641af428ae2d560828, type: 3}
+    houseName: shoptier2
+    citizens: 2
+    energy: 2
+    income: 2
+  - housePrefab: {fileID: 5835200917880059706, guid: 00beb51423a44dd42b1e1470c1a1512c, type: 3}
+    houseName: shoptier3
+    citizens: 3
+    energy: 3
+    income: 3
+  - housePrefab: {fileID: 4343618026950895146, guid: d68f222723cd99b4a973ef37c11f7890, type: 3}
+    houseName: shoptier4
+    citizens: 4
+    energy: 4
+    income: 4
+  - housePrefab: {fileID: 2046144465704724618, guid: d665f9172660c924a86a79774bf57043, type: 3}
+    houseName: factier2
+    citizens: 2
+    energy: 2
+    income: 2
+  - housePrefab: {fileID: 9128197183162221254, guid: a322aff3c6b18034faccd928c4b60955, type: 3}
+    houseName: factier3
+    citizens: 3
+    energy: 3
+    income: 3
 --- !u!1 &1060199959 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 104663a8e0251104791eedf5b486736b, type: 3}

@@ -11,14 +11,12 @@ public class ShopOpenClose : MonoBehaviour
     [SerializeField] private Button CloseShopButton;
     [SerializeField] private GameObject ShopPanel;
     private bool isShopOpen = false;
-
     private void Start()
     {
         OpenShopButton.onClick.AddListener(ToggleMenu);
         CloseShopButton.onClick.AddListener(ExitMenu);
         ShopPanel.SetActive(false);
     }
-
     public void ToggleMenu()
     {
         isShopOpen = !isShopOpen;
@@ -26,12 +24,10 @@ public class ShopOpenClose : MonoBehaviour
         anim.SetBool("ShopOpen", isShopOpen);
         OpenShopButton.gameObject.SetActive(false);
     }
-    
     public void ExitMenu()
     {
         isShopOpen = false;
         anim.SetBool("ShopOpen", isShopOpen);
         OpenShopButton.gameObject.SetActive(true);
     }
-
 }

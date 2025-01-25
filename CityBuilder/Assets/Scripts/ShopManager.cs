@@ -10,21 +10,17 @@ public class ShopManager : MonoBehaviour
     {
         public GameObject housePrefab; 
         public Button buyButton;
-        public float price; 
+        public int price; 
     }
-
-    [SerializeField] private List<HouseData> houses; 
-
-    private void Start()
+    [SerializeField] public List<HouseData> houses; 
+    public void Start()
     {
-        // Настраиваем каждую кнопку
         foreach (var houseData in houses)
         {
             houseData.buyButton.onClick.AddListener(() => OnBuyClicked(houseData));
         }
     }
-
-    public float GetHousePrice(GameObject housePrefab)
+    public int GetHousePrice(GameObject housePrefab)
     {
         foreach (var houseData in houses)
         {
@@ -33,9 +29,8 @@ public class ShopManager : MonoBehaviour
                 return houseData.price;
             }
         }
-        return 0f;
+        return 0;
     }
-
     private void OnBuyClicked(HouseData houseData)
     {
         if (GameManager.Instance.money < houseData.price)
@@ -53,7 +48,6 @@ public class ShopManager : MonoBehaviour
         GameManager.Instance.money -= houseData.price;
         GameManager.Instance.SpawnHouse(houseData.housePrefab);
     }
-
     private IEnumerator MakeButtonFlash(Button button, Color flashColor)
     {
         button.targetGraphic.color = flashColor;

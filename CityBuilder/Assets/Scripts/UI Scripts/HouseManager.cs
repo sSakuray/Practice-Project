@@ -13,7 +13,6 @@ public class HouseManager : MonoBehaviour
         public int energy;
         public int income;
     }
-
     [SerializeField] private List<HouseData> houses;
     public HouseData GetHouseData(GameObject housePrefab)
     {

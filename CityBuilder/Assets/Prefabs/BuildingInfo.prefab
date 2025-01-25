@@ -1869,11 +1869,36 @@ MonoBehaviour:
   upgradeButton: {fileID: 3536348497784848333}
   rotateButton: {fileID: 778482491669662860}
   deleteButton: {fileID: 2317059898418946203}
-  statPanel: {fileID: 0}
+  statPanel: {fileID: 7258353760615933375}
+  priceText: {fileID: 6355644108900650348}
   upgradeOptions:
   - currentPrefab: {fileID: 939303671511055434, guid: 8940195d867bc744e9c383c2c803a49d, type: 3}
-    upgradedPrefab: {fileID: 7423634325840878559, guid: 8f1b9927db8573442a061275e89e8eae, type: 3}
+    upgradedPrefab: {fileID: 1076019684008784579, guid: 06e25c97c43d2264980084f9370fea96, type: 3}
     upgradeCost: 500
+  - currentPrefab: {fileID: 1076019684008784579, guid: 06e25c97c43d2264980084f9370fea96, type: 3}
+    upgradedPrefab: {fileID: 6890891646737303306, guid: 7f932d07e66e3cb4080f064b6d68a29f, type: 3}
+    upgradeCost: 1000
+  - currentPrefab: {fileID: 1076019684008784579, guid: 06e25c97c43d2264980084f9370fea96, type: 3}
+    upgradedPrefab: {fileID: 6890891646737303306, guid: 7f932d07e66e3cb4080f064b6d68a29f, type: 3}
+    upgradeCost: 5000
+  - currentPrefab: {fileID: 6890891646737303306, guid: 7f932d07e66e3cb4080f064b6d68a29f, type: 3}
+    upgradedPrefab: {fileID: 3909753701925984706, guid: 4247215771af2f047803f52a16231f51, type: 3}
+    upgradeCost: 500000
+  - currentPrefab: {fileID: 7423634325840878559, guid: 8f1b9927db8573442a061275e89e8eae, type: 3}
+    upgradedPrefab: {fileID: 2117556170072946733, guid: 3e9e31399ac90f641af428ae2d560828, type: 3}
+    upgradeCost: 100000
+  - currentPrefab: {fileID: 2117556170072946733, guid: 3e9e31399ac90f641af428ae2d560828, type: 3}
+    upgradedPrefab: {fileID: 5835200917880059706, guid: 00beb51423a44dd42b1e1470c1a1512c, type: 3}
+    upgradeCost: 0
+  - currentPrefab: {fileID: 5835200917880059706, guid: 00beb51423a44dd42b1e1470c1a1512c, type: 3}
+    upgradedPrefab: {fileID: 4343618026950895146, guid: d68f222723cd99b4a973ef37c11f7890, type: 3}
+    upgradeCost: 0
+  - currentPrefab: {fileID: 6399647409633550824, guid: 84753e87208614641ba90cf724978824, type: 3}
+    upgradedPrefab: {fileID: 2046144465704724618, guid: d665f9172660c924a86a79774bf57043, type: 3}
+    upgradeCost: 0
+  - currentPrefab: {fileID: 2046144465704724618, guid: d665f9172660c924a86a79774bf57043, type: 3}
+    upgradedPrefab: {fileID: 9128197183162221254, guid: a322aff3c6b18034faccd928c4b60955, type: 3}
+    upgradeCost: 0
 --- !u!1 &7499028270870717484
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,7 +6,6 @@ public class DragCamera : MonoBehaviour
     private bool isDragging = false;
     [SerializeField] private Transform mainCamera;
     [SerializeField] private Transform rotationObject;
-
     void Update()
     {
         if (Input.GetMouseButtonDown(2)) 
@@ -26,7 +25,6 @@ public class DragCamera : MonoBehaviour
             Vector3 move = new Vector3(-mouseDelta.x * 0.1f, -mouseDelta.y * 0.1f, 0); 
             transform.position += transform.TransformDirection(move); 
         }
-
         rotationObject.rotation = mainCamera.transform.rotation;
     }
 }
