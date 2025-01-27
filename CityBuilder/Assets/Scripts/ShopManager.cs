@@ -33,20 +33,29 @@ public class ShopManager : MonoBehaviour
     }
     private void OnBuyClicked(HouseData houseData)
     {
-        if (GameManager.Instance.money < houseData.price)
-        {
-            StartCoroutine(MakeButtonFlash(houseData.buyButton, Color.red));
-            return;
-        }
-
         if (GameManager.Instance.isHouseBeingPlaced)
         {
             return;
         }
 
-        StartCoroutine(MakeButtonFlash(houseData.buyButton, Color.green));
-        GameManager.Instance.money -= houseData.price;
-        GameManager.Instance.SpawnHouse(houseData.housePrefab);
+        var houseManager = FindObjectOfType<HouseManager>();
+        if (houseManager == null) return;
+
+        if (houseManager.CanPurchaseBuilding(houseData.housePrefab))
+        {
+            StartCoroutine(MakeButtonFlash(houseData.buyButton, Color.green));
+            GameManager.Instance.money -= houseData.price;
+
+            var requirement = houseManager.GetHouseRequirement(houseData.housePrefab);
+            GameManager.Instance.totalCitizens -= requirement.requiredCitizens;
+            GameManager.Instance.totalEnergy -= requirement.requiredEnergy;
+
+            GameManager.Instance.SpawnHouse(houseData.housePrefab);
+        }
+        else
+        {
+            StartCoroutine(MakeButtonFlash(houseData.buyButton, Color.red));
+        }
     }
     private IEnumerator MakeButtonFlash(Button button, Color flashColor)
     {

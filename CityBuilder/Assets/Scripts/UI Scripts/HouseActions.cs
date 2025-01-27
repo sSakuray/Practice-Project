@@ -60,6 +60,14 @@ public class HouseActions : MonoBehaviour
         {
             if (option.currentPrefab.name == currentHouse.name.Replace("(Clone)", "").Trim())
             {
+                var houseManager = FindObjectOfType<HouseManager>();
+                if (houseManager == null) return;
+
+                if (!houseManager.CanUpgradeBuilding(currentHouse, option.upgradedPrefab))
+                {
+                    Debug.LogWarning("Нехватает ресурсов для апгрейда!");
+                    return;
+                }
                 if (GameManager.Instance.money >= option.upgradeCost)
                 {
                     Vector3 position = currentHouse.transform.position;
@@ -78,6 +86,12 @@ public class HouseActions : MonoBehaviour
                     GameObject upgradedHouse = Instantiate(option.upgradedPrefab, position, rotation);
                     currentHouse = upgradedHouse;
 
+                    // Списываем ресурсы, указанные для апгрейда
+                    var upgradedRequirement = houseManager.GetHouseRequirement(option.upgradedPrefab);
+                    GameManager.Instance.totalCitizens -= upgradedRequirement.requiredCitizens;
+                    GameManager.Instance.totalEnergy -= upgradedRequirement.requiredEnergy;
+
+                    // Списываем деньги
                     GameManager.Instance.money -= option.upgradeCost;
                     totalSpentOnUpgrades += option.upgradeCost;
 
@@ -96,18 +110,40 @@ public class HouseActions : MonoBehaviour
                     }
                     return;
                 }
+                else
+                {
+                    Debug.LogWarning("Недостаточно денег для апгрейда!");
+                }
             }
         }
     }
+
     public void RotateHouse()
     {
         currentHouse.transform.RotateAround(currentHouse.transform.position, Vector3.up, 90);
     }
     public void DeleteHouse()
     {
-        GameManager.Instance.money += (int)(houseCost * 0.7);
-        Destroy(statPanel);
-        Destroy(currentHouse);
-        currentHouse = null;
+        var houseManager = FindObjectOfType<HouseManager>();
+        if (houseManager == null || currentHouse == null) return;
+
+        if (houseManager.CanSellBuilding(currentHouse))
+        {
+            var houseData = houseManager.GetHouseData(currentHouse);
+            if (houseData != null)
+            {
+                GameManager.Instance.totalCitizens -= houseData.citizens;
+                GameManager.Instance.totalEnergy -= houseData.energy;
+            }
+
+            GameManager.Instance.money += (int)(houseCost * 0.7);
+
+            Destroy(currentHouse);
+            currentHouse = null;
+        }
+        else
+        {
+            Debug.LogWarning("Нельзя удалить здание: ресурсы уйдут в отрицательное значение!");
+        }
     }
 }

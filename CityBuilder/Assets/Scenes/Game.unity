@@ -5335,16 +5335,16 @@ MonoBehaviour:
     buyButton: {fileID: 229472905}
     price: 300
   - housePrefab: {fileID: 166466687111817804, guid: a49794ae29f85074f949af5fabfa88e3, type: 3}
-    buyButton: {fileID: 0}
+    buyButton: {fileID: 1716021999}
     price: 400
   - housePrefab: {fileID: 4597341443649809608, guid: 8448103d2a471a04eb6cd5a0856df083, type: 3}
-    buyButton: {fileID: 0}
+    buyButton: {fileID: 696517375}
     price: 500
   - housePrefab: {fileID: 814826310091267804, guid: 4cb30e0c8459f644a872d12ad4b9e236, type: 3}
-    buyButton: {fileID: 0}
+    buyButton: {fileID: 1250805804}
     price: 600
   - housePrefab: {fileID: 5604227539250767165, guid: 3f45a1384ab819249913ac9e065134e6, type: 3}
-    buyButton: {fileID: 0}
+    buyButton: {fileID: 1937148629}
     price: 700
 --- !u!114 &1049045087
 MonoBehaviour:
@@ -5361,19 +5361,19 @@ MonoBehaviour:
   houses:
   - housePrefab: {fileID: 939303671511055434, guid: 8940195d867bc744e9c383c2c803a49d, type: 3}
     houseName: House
-    citizens: 1
-    energy: 50
-    income: 100
+    citizens: 20
+    energy: 0
+    income: 0
   - housePrefab: {fileID: 7423634325840878559, guid: 8f1b9927db8573442a061275e89e8eae, type: 3}
     houseName: Shop
-    citizens: 5
-    energy: 250
+    citizens: 0
+    energy: 0
     income: 2500
   - housePrefab: {fileID: 6399647409633550824, guid: 84753e87208614641ba90cf724978824, type: 3}
     houseName: Wind Turbine
-    citizens: 10
-    energy: 1000
-    income: 10000
+    citizens: 0
+    energy: 50
+    income: 0
   - housePrefab: {fileID: 166466687111817804, guid: a49794ae29f85074f949af5fabfa88e3, type: 3}
     houseName: Straight Road
     citizens: 0
@@ -5434,6 +5434,19 @@ MonoBehaviour:
     citizens: 3
     energy: 3
     income: 3
+  requirements:
+  - housePrefab: {fileID: 939303671511055434, guid: 8940195d867bc744e9c383c2c803a49d, type: 3}
+    requiredCitizens: 0
+    requiredEnergy: 50
+  - housePrefab: {fileID: 7423634325840878559, guid: 8f1b9927db8573442a061275e89e8eae, type: 3}
+    requiredCitizens: 20
+    requiredEnergy: 30
+  - housePrefab: {fileID: 6399647409633550824, guid: 84753e87208614641ba90cf724978824, type: 3}
+    requiredCitizens: 0
+    requiredEnergy: 0
+  - housePrefab: {fileID: 1076019684008784579, guid: 06e25c97c43d2264980084f9370fea96, type: 3}
+    requiredCitizens: 0
+    requiredEnergy: 50
 --- !u!1 &1060199959 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 104663a8e0251104791eedf5b486736b, type: 3}

@@ -22,17 +22,27 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
     }
-
+    private void Start()
+    {
+        StartCoroutine(AccumulateMoney());
+    }
     private void Update()
     {
         UpdateGameStats();
     }
-
     private void UpdateGameStats()
     {
-        quantityMoneyText.text = $"{money}";
+        quantityMoneyText.text = ConvertMoney(money);
         if (citizensText != null) citizensText.text = $"{totalCitizens}";
         if (energyText != null) energyText.text = $"{totalEnergy}";
+    }
+
+    public string ConvertMoney(int amount)
+    {
+        if (amount >= 1000000) return (amount / 1000000f).ToString("0.#") + "M";
+        if (amount >= 100000) return (amount / 1000f).ToString("0.#") + "k";
+        if (amount >= 1000) return (amount / 1000f).ToString("0.#") + "k";
+        return amount.ToString();
     }
 
     public void SpawnHouse(GameObject housePrefab)
@@ -87,6 +97,15 @@ public class GameManager : MonoBehaviour
                 totalCitizens -= houseData.citizens;
                 totalEnergy -= houseData.energy;
             }
+        }
+    }
+
+    private IEnumerator AccumulateMoney()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(2);
+            money += 100;
         }
     }
 }
