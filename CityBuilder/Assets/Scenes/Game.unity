@@ -532,6 +532,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 85411783}
   m_CullTransparentMesh: 1
+--- !u!1 &109067008
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 109067009}
+  m_Layer: 0
+  m_Name: MusicPlayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &109067009
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 109067008}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -54.670902, y: -92.80222, z: 23.767239}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &139586780
 GameObject:
   m_ObjectHideFlags: 0
@@ -5271,7 +5302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbfe76c91314ecd4a9223c15312ed457, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  money: 1000000
+  money: 300
   totalCitizens: 0
   totalEnergy: 0
   panelLayer:
@@ -5281,6 +5312,7 @@ MonoBehaviour:
   quantityMoneyText: {fileID: 1229948433}
   citizensText: {fileID: 85411785}
   energyText: {fileID: 193923951}
+  IncomeWaitInSeconds: 10
 --- !u!114 &1049045084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5327,25 +5359,25 @@ MonoBehaviour:
   houses:
   - housePrefab: {fileID: 939303671511055434, guid: 8940195d867bc744e9c383c2c803a49d, type: 3}
     buyButton: {fileID: 818600437}
-    price: 100
+    price: 40
   - housePrefab: {fileID: 7423634325840878559, guid: 8f1b9927db8573442a061275e89e8eae, type: 3}
     buyButton: {fileID: 882284762}
-    price: 200
+    price: 60
   - housePrefab: {fileID: 6399647409633550824, guid: 84753e87208614641ba90cf724978824, type: 3}
     buyButton: {fileID: 229472905}
-    price: 300
+    price: 100
   - housePrefab: {fileID: 166466687111817804, guid: a49794ae29f85074f949af5fabfa88e3, type: 3}
     buyButton: {fileID: 1716021999}
-    price: 400
+    price: 50
   - housePrefab: {fileID: 4597341443649809608, guid: 8448103d2a471a04eb6cd5a0856df083, type: 3}
     buyButton: {fileID: 696517375}
-    price: 500
+    price: 50
   - housePrefab: {fileID: 814826310091267804, guid: 4cb30e0c8459f644a872d12ad4b9e236, type: 3}
     buyButton: {fileID: 1250805804}
-    price: 600
+    price: 50
   - housePrefab: {fileID: 5604227539250767165, guid: 3f45a1384ab819249913ac9e065134e6, type: 3}
     buyButton: {fileID: 1937148629}
-    price: 700
+    price: 50
 --- !u!114 &1049045087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5361,29 +5393,29 @@ MonoBehaviour:
   houses:
   - housePrefab: {fileID: 939303671511055434, guid: 8940195d867bc744e9c383c2c803a49d, type: 3}
     houseName: House
-    citizens: 20
+    citizens: 4
     energy: 0
     income: 0
   - housePrefab: {fileID: 7423634325840878559, guid: 8f1b9927db8573442a061275e89e8eae, type: 3}
     houseName: Shop
     citizens: 0
     energy: 0
-    income: 2500
+    income: 10
   - housePrefab: {fileID: 6399647409633550824, guid: 84753e87208614641ba90cf724978824, type: 3}
     houseName: Wind Turbine
     citizens: 0
-    energy: 50
+    energy: 100
     income: 0
   - housePrefab: {fileID: 166466687111817804, guid: a49794ae29f85074f949af5fabfa88e3, type: 3}
     houseName: Straight Road
     citizens: 0
     energy: 0
-    income: 15000
+    income: 0
   - housePrefab: {fileID: 4597341443649809608, guid: 8448103d2a471a04eb6cd5a0856df083, type: 3}
     houseName: Corner Road
     citizens: 0
     energy: 0
-    income: 625356
+    income: 0
   - housePrefab: {fileID: 814826310091267804, guid: 4cb30e0c8459f644a872d12ad4b9e236, type: 3}
     houseName: TRoad
     citizens: 0
@@ -5393,60 +5425,93 @@ MonoBehaviour:
     houseName: XRoad
     citizens: 0
     energy: 0
-    income: 1111111
+    income: 0
   - housePrefab: {fileID: 1076019684008784579, guid: 06e25c97c43d2264980084f9370fea96, type: 3}
     houseName: housetier2
-    citizens: 20
+    citizens: 60
     energy: 0
     income: 0
   - housePrefab: {fileID: 6890891646737303306, guid: 7f932d07e66e3cb4080f064b6d68a29f, type: 3}
     houseName: housetier3
-    citizens: 3
-    energy: 3
-    income: 3
+    citizens: 2800
+    energy: 0
+    income: 0
   - housePrefab: {fileID: 3909753701925984706, guid: 4247215771af2f047803f52a16231f51, type: 3}
     houseName: housetier4
-    citizens: 4
-    energy: 4
-    income: 4
+    citizens: 24000
+    energy: 0
+    income: 0
   - housePrefab: {fileID: 2117556170072946733, guid: 3e9e31399ac90f641af428ae2d560828, type: 3}
     houseName: shoptier2
-    citizens: 2
-    energy: 2
-    income: 2
+    citizens: 0
+    energy: 0
+    income: 1200
   - housePrefab: {fileID: 5835200917880059706, guid: 00beb51423a44dd42b1e1470c1a1512c, type: 3}
     houseName: shoptier3
-    citizens: 3
-    energy: 3
-    income: 3
+    citizens: 0
+    energy: 0
+    income: 140000
   - housePrefab: {fileID: 4343618026950895146, guid: d68f222723cd99b4a973ef37c11f7890, type: 3}
     houseName: shoptier4
-    citizens: 4
-    energy: 4
-    income: 4
+    citizens: 0
+    energy: 0
+    income: 1200000
   - housePrefab: {fileID: 2046144465704724618, guid: d665f9172660c924a86a79774bf57043, type: 3}
     houseName: factier2
-    citizens: 2
-    energy: 2
-    income: 2
+    citizens: 0
+    energy: 1800
+    income: 0
   - housePrefab: {fileID: 9128197183162221254, guid: a322aff3c6b18034faccd928c4b60955, type: 3}
     houseName: factier3
-    citizens: 3
-    energy: 3
-    income: 3
+    citizens: 0
+    energy: 40000
+    income: 0
   requirements:
   - housePrefab: {fileID: 939303671511055434, guid: 8940195d867bc744e9c383c2c803a49d, type: 3}
     requiredCitizens: 0
-    requiredEnergy: 50
+    requiredEnergy: 30
   - housePrefab: {fileID: 7423634325840878559, guid: 8f1b9927db8573442a061275e89e8eae, type: 3}
-    requiredCitizens: 20
+    requiredCitizens: 4
     requiredEnergy: 30
   - housePrefab: {fileID: 6399647409633550824, guid: 84753e87208614641ba90cf724978824, type: 3}
     requiredCitizens: 0
     requiredEnergy: 0
   - housePrefab: {fileID: 1076019684008784579, guid: 06e25c97c43d2264980084f9370fea96, type: 3}
     requiredCitizens: 0
-    requiredEnergy: 50
+    requiredEnergy: 200
+  - housePrefab: {fileID: 6890891646737303306, guid: 7f932d07e66e3cb4080f064b6d68a29f, type: 3}
+    requiredCitizens: 0
+    requiredEnergy: 1000
+  - housePrefab: {fileID: 3909753701925984706, guid: 4247215771af2f047803f52a16231f51, type: 3}
+    requiredCitizens: 0
+    requiredEnergy: 10000
+  - housePrefab: {fileID: 2046144465704724618, guid: d665f9172660c924a86a79774bf57043, type: 3}
+    requiredCitizens: 20
+    requiredEnergy: 0
+  - housePrefab: {fileID: 9128197183162221254, guid: a322aff3c6b18034faccd928c4b60955, type: 3}
+    requiredCitizens: 600
+    requiredEnergy: 0
+  - housePrefab: {fileID: 2117556170072946733, guid: 3e9e31399ac90f641af428ae2d560828, type: 3}
+    requiredCitizens: 40
+    requiredEnergy: 300
+  - housePrefab: {fileID: 5835200917880059706, guid: 00beb51423a44dd42b1e1470c1a1512c, type: 3}
+    requiredCitizens: 1100
+    requiredEnergy: 2000
+  - housePrefab: {fileID: 4343618026950895146, guid: d68f222723cd99b4a973ef37c11f7890, type: 3}
+    requiredCitizens: 25000
+    requiredEnergy: 2000
+  - housePrefab: {fileID: 166466687111817804, guid: a49794ae29f85074f949af5fabfa88e3, type: 3}
+    requiredCitizens: 0
+    requiredEnergy: 0
+  - housePrefab: {fileID: 4597341443649809608, guid: 8448103d2a471a04eb6cd5a0856df083, type: 3}
+    requiredCitizens: 0
+    requiredEnergy: 0
+  - housePrefab: {fileID: 5604227539250767165, guid: 3f45a1384ab819249913ac9e065134e6, type: 3}
+    requiredCitizens: 0
+    requiredEnergy: 0
+  - housePrefab: {fileID: 814826310091267804, guid: 4cb30e0c8459f644a872d12ad4b9e236, type: 3}
+    requiredCitizens: 0
+    requiredEnergy: 0
 --- !u!1 &1060199959 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 104663a8e0251104791eedf5b486736b, type: 3}
@@ -10562,3 +10627,4 @@ SceneRoots:
   - {fileID: 1211626717}
   - {fileID: 1049045082}
   - {fileID: 1900194167}
+  - {fileID: 109067009}

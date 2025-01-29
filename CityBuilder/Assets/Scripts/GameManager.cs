@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI quantityMoneyText;
     [SerializeField] private TextMeshProUGUI citizensText;
     [SerializeField] private TextMeshProUGUI energyText;
+    [SerializeField] private int IncomeWaitInSeconds;
 
     private void Awake()
     {
@@ -133,7 +134,7 @@ public class GameManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(222222);
+            yield return new WaitForSeconds(IncomeWaitInSeconds);
             money += 100;
         }
     }
