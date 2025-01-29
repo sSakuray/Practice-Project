@@ -7,14 +7,20 @@ public class SpawnStats : MonoBehaviour
     [SerializeField] private GameObject statPanelPrefab; 
     [SerializeField] private Animator statsPanelAnim;    
     [SerializeField] private GameObject originalPrefab;
+    [SerializeField] private GameObject upgradedFromPrefab; 
     private static GameObject currentActiveStatPanel; 
     private GameObject spawnedStatPanel;             
     private bool isPlaced = false;                   
     private int currentHousePrice;                  
     public GridCell AssociatedCell { get; set; }       
-    public void Initialize(GameObject prefab)
+    public GameObject OriginalPrefab => originalPrefab;
+    public GameObject UpgradedFromPrefab => upgradedFromPrefab;
+    public bool IsUpgraded => upgradedFromPrefab != null;
+
+    public void Initialize(GameObject prefab, GameObject upgradedFrom = null)
     {
         originalPrefab = prefab;
+        upgradedFromPrefab = upgradedFrom;
         ShopManager shopManager = FindObjectOfType<ShopManager>();
         if (shopManager != null)
         {
@@ -95,10 +101,6 @@ public class SpawnStats : MonoBehaviour
         {
             Destroy(currentActiveStatPanel);
             currentActiveStatPanel = null;
-        }
-        if (isPlaced)
-        {
-            GameManager.Instance.UpdateStatsOnHouseRemoved(originalPrefab);
         }
     }
 }

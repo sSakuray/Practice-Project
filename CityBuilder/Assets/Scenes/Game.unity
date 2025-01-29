@@ -5396,9 +5396,9 @@ MonoBehaviour:
     income: 1111111
   - housePrefab: {fileID: 1076019684008784579, guid: 06e25c97c43d2264980084f9370fea96, type: 3}
     houseName: housetier2
-    citizens: 2
-    energy: 2
-    income: 2
+    citizens: 20
+    energy: 0
+    income: 0
   - housePrefab: {fileID: 6890891646737303306, guid: 7f932d07e66e3cb4080f064b6d68a29f, type: 3}
     houseName: housetier3
     citizens: 3

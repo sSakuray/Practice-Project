@@ -66,12 +66,17 @@ public class HouseManager : MonoBehaviour
 
     public bool CanUpgradeBuilding(GameObject currentPrefab, GameObject upgradedPrefab)
     {
-
         var upgradedRequirement = requirements.Find(req => req.housePrefab == upgradedPrefab);
-        if (upgradedRequirement == null) return false;
+        var upgradedData = GetHouseData(upgradedPrefab);
+        if (upgradedRequirement == null || upgradedData == null) return false;
 
+        if (GameManager.Instance.totalCitizens >= upgradedRequirement.requiredCitizens &&
+            GameManager.Instance.totalEnergy >= upgradedRequirement.requiredEnergy)
+        {
+            GameManager.Instance.totalEnergy -= upgradedRequirement.requiredEnergy;
+            return true;
+        }
 
-        return GameManager.Instance.totalCitizens >= upgradedRequirement.requiredCitizens &&
-            GameManager.Instance.totalEnergy >= upgradedRequirement.requiredEnergy;
+        return false;
     }
 }

@@ -75,10 +75,12 @@ public class HouseActions : MonoBehaviour
 
                     SpawnStats oldSpawnStats = currentHouse.GetComponent<SpawnStats>();
                     GameObject originalPrefab = null;
+                    GameObject upgradedFromPrefab = null;
                     GridCell associatedCell = null; 
                     if (oldSpawnStats != null)
                     {
                         originalPrefab = option.upgradedPrefab;
+                        upgradedFromPrefab = option.currentPrefab;
                         associatedCell = oldSpawnStats.AssociatedCell; 
                     }
                     Destroy(currentHouse);
@@ -86,12 +88,8 @@ public class HouseActions : MonoBehaviour
                     GameObject upgradedHouse = Instantiate(option.upgradedPrefab, position, rotation);
                     currentHouse = upgradedHouse;
 
-                    // Списываем ресурсы, указанные для апгрейда
                     var upgradedRequirement = houseManager.GetHouseRequirement(option.upgradedPrefab);
                     GameManager.Instance.totalCitizens -= upgradedRequirement.requiredCitizens;
-                    GameManager.Instance.totalEnergy -= upgradedRequirement.requiredEnergy;
-
-                    // Списываем деньги
                     GameManager.Instance.money -= option.upgradeCost;
                     totalSpentOnUpgrades += option.upgradeCost;
 
@@ -100,7 +98,7 @@ public class HouseActions : MonoBehaviour
                     SpawnStats spawnStats = upgradedHouse.GetComponent<SpawnStats>();
                     if (spawnStats != null)
                     {
-                        spawnStats.Initialize(originalPrefab);
+                        spawnStats.Initialize(originalPrefab, upgradedFromPrefab);
                         spawnStats.AssociatedCell = associatedCell;  
                         spawnStats.PlaceHouse();  
 
@@ -125,25 +123,18 @@ public class HouseActions : MonoBehaviour
     public void DeleteHouse()
     {
         var houseManager = FindObjectOfType<HouseManager>();
-        if (houseManager == null || currentHouse == null) return;
+        if (houseManager == null) return;
 
-        if (houseManager.CanSellBuilding(currentHouse))
+        SpawnStats spawnStats = currentHouse.GetComponent<SpawnStats>();
+        if (spawnStats == null || !houseManager.CanSellBuilding(spawnStats.OriginalPrefab))
         {
-            var houseData = houseManager.GetHouseData(currentHouse);
-            if (houseData != null)
-            {
-                GameManager.Instance.totalCitizens -= houseData.citizens;
-                GameManager.Instance.totalEnergy -= houseData.energy;
-            }
-
-            GameManager.Instance.money += (int)(houseCost * 0.7);
-
-            Destroy(currentHouse);
-            currentHouse = null;
+            Debug.LogWarning("Нельзя удалить здание - это приведет к отрицательным значениям ресурсов!");
+            return;
         }
-        else
-        {
-            Debug.LogWarning("Нельзя удалить здание: ресурсы уйдут в отрицательное значение!");
-        }
+        GameManager.Instance.UpdateStatsOnHouseRemoved(spawnStats.OriginalPrefab);
+        GameManager.Instance.money += (int)(houseCost * 0.7);
+        Destroy(statPanel);
+        Destroy(currentHouse);
+        currentHouse = null;
     }
 }

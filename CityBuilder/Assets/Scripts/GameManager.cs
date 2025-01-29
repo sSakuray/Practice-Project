@@ -81,7 +81,10 @@ public class GameManager : MonoBehaviour
             if (houseData != null)
             {
                 totalCitizens += houseData.citizens;
-                totalEnergy += houseData.energy;
+                if (houseData.energy > 0)
+                {
+                    totalEnergy += houseData.energy;
+                }
             }
         }
     }
@@ -92,10 +95,36 @@ public class GameManager : MonoBehaviour
         if (houseManager != null)
         {
             var houseData = houseManager.GetHouseData(housePrefab);
-            if (houseData != null)
+            var houseRequirement = houseManager.GetHouseRequirement(housePrefab);
+            SpawnStats spawnStats = FindObjectOfType<SpawnStats>();
+            bool isUpgraded = spawnStats != null && spawnStats.IsUpgraded;
+            
+            if (houseData != null && houseRequirement != null)
             {
-                totalCitizens -= houseData.citizens;
+                if (isUpgraded && spawnStats.UpgradedFromPrefab != null)
+                {
+                    var originalHouseData = houseManager.GetHouseData(spawnStats.UpgradedFromPrefab);
+                    if (originalHouseData != null)
+                    {
+                        totalCitizens -= (originalHouseData.citizens + houseData.citizens);
+                    }
+                }
+                else
+                {
+                    totalCitizens -= houseData.citizens;
+                }
+                totalCitizens += houseRequirement.requiredCitizens;
                 totalEnergy -= houseData.energy;
+                totalEnergy += houseRequirement.requiredEnergy;
+                if (isUpgraded && spawnStats.UpgradedFromPrefab != null)
+                {
+                    var upgradeRequirement = houseManager.GetHouseRequirement(spawnStats.UpgradedFromPrefab);
+                    if (upgradeRequirement != null)
+                    {
+                        totalEnergy += upgradeRequirement.requiredEnergy;
+                        totalCitizens += upgradeRequirement.requiredCitizens;
+                    }
+                }
             }
         }
     }
@@ -104,7 +133,7 @@ public class GameManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(222222);
             money += 100;
         }
     }
