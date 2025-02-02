@@ -48,6 +48,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -180
       objectReference: {fileID: 0}
+    - target: {fileID: -5754084199372789682, guid: bf8472536cc785c448333bb42976f7ac, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 3390558720134950976, guid: 63a65ba090330f840a4b1e2dd8130a8c, type: 3}
     - target: {fileID: 919132149155446097, guid: bf8472536cc785c448333bb42976f7ac, type: 3}
       propertyPath: m_Name
       value: FacTier2
@@ -83,6 +87,7 @@ MonoBehaviour:
   statPanelPrefab: {fileID: 7258353760615933375, guid: 2f5eab5c9cc4a904bb3e819e2b7103ac, type: 3}
   statsPanelAnim: {fileID: 0}
   originalPrefab: {fileID: 0}
+  upgradedFromPrefab: {fileID: 0}
 --- !u!65 &6757433399073366633
 BoxCollider:
   m_ObjectHideFlags: 0
