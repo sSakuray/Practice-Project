@@ -70,13 +70,7 @@ public class HouseManager : MonoBehaviour
         var upgradedData = GetHouseData(upgradedPrefab);
         if (upgradedRequirement == null || upgradedData == null) return false;
 
-        if (GameManager.Instance.totalCitizens >= upgradedRequirement.requiredCitizens &&
-            GameManager.Instance.totalEnergy >= upgradedRequirement.requiredEnergy)
-        {
-            GameManager.Instance.totalEnergy -= upgradedRequirement.requiredEnergy;
-            return true;
-        }
-
-        return false;
+        return GameManager.Instance.totalCitizens >= upgradedRequirement.requiredCitizens &&
+               GameManager.Instance.totalEnergy >= upgradedRequirement.requiredEnergy;
     }
 }

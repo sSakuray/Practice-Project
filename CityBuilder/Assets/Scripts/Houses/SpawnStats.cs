@@ -49,7 +49,27 @@ public class SpawnStats : MonoBehaviour
     public void PlaceHouse()
     {
         isPlaced = true; 
-        GameManager.Instance.UpdateStatsOnHousePlaced(originalPrefab);
+        
+        if (!IsUpgraded)
+        {
+            GameManager.Instance.UpdateStatsOnHousePlaced(originalPrefab);
+        }
+        else
+        {
+            HouseManager houseManager = FindObjectOfType<HouseManager>();
+            if (houseManager != null)
+            {
+                var houseData = houseManager.GetHouseData(originalPrefab);
+                if (houseData != null)
+                {
+                    GameManager.Instance.totalCitizens += houseData.citizens;
+                    if (houseData.energy > 0)
+                    {
+                        GameManager.Instance.totalEnergy += houseData.energy;
+                    }
+                }
+            }
+        }
     }
     public void SpawnStatPanel()
     {

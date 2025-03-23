@@ -28,9 +28,9 @@ public class HousePlacer : MonoBehaviour
     private void MoveHouseWithMouse()
     {
         Vector3 mousePosition = Input.mousePosition;
-        mousePosition.z = 10f; 
+        mousePosition.z = 35f;  
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
-        worldPosition.z += 3f;
+        worldPosition.y -= 2f;
         transform.position = worldPosition;
     }
 
@@ -43,10 +43,10 @@ public class HousePlacer : MonoBehaviour
         {
             GridCell cell = hit.collider.GetComponent<GridCell>();
 
-            if (cell != null && !cell.isOccupied)
+            if (cell != null && !cell.isOccupied && !GridRegistry.IsOccupied(hit.collider.transform.position))
             {
                 transform.position = hit.collider.transform.position;
-                cell.isOccupied = true; 
+                cell.SetOccupied(true);
                 var houseComponent = GetComponent<SpawnStats>();
                 if (houseComponent != null)
                 {
@@ -56,6 +56,10 @@ public class HousePlacer : MonoBehaviour
                 GetComponent<SpawnStats>().PlaceHouse();
                 isPlacing = false;      
                 GameManager.Instance.HousePlaced();
+            }
+            else
+            {
+                Debug.LogWarning($"Невозможно разместить здание: позиция {hit.collider.transform.position} уже занята!");
             }
         }
     }

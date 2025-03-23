@@ -41,6 +41,14 @@ public class ShopManager : MonoBehaviour
         var houseManager = FindObjectOfType<HouseManager>();
         if (houseManager == null) return;
 
+        // Проверяем достаточно ли денег для покупки
+        if (GameManager.Instance.money < houseData.price)
+        {
+            Debug.LogWarning("Недостаточно денег для покупки этого здания!");
+            StartCoroutine(MakeButtonFlash(houseData.buyButton, Color.red));
+            return;
+        }
+
         if (houseManager.CanPurchaseBuilding(houseData.housePrefab))
         {
             StartCoroutine(MakeButtonFlash(houseData.buyButton, Color.green));

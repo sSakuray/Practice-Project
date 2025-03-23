@@ -5305,6 +5305,7 @@ MonoBehaviour:
   money: 300
   totalCitizens: 0
   totalEnergy: 0
+  totalIncome: 100
   panelLayer:
     serializedVersion: 2
     m_Bits: 64

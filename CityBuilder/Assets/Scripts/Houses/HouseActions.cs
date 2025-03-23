@@ -63,11 +63,13 @@ public class HouseActions : MonoBehaviour
                 var houseManager = FindObjectOfType<HouseManager>();
                 if (houseManager == null) return;
 
+                // Проверяем наличие ресурсов
                 if (!houseManager.CanUpgradeBuilding(currentHouse, option.upgradedPrefab))
                 {
                     Debug.LogWarning("Нехватает ресурсов для апгрейда!");
                     return;
                 }
+                
                 if (GameManager.Instance.money >= option.upgradeCost)
                 {
                     Vector3 position = currentHouse.transform.position;
@@ -77,21 +79,35 @@ public class HouseActions : MonoBehaviour
                     GameObject originalPrefab = null;
                     GameObject upgradedFromPrefab = null;
                     GridCell associatedCell = null; 
+                    
                     if (oldSpawnStats != null)
                     {
                         originalPrefab = option.upgradedPrefab;
                         upgradedFromPrefab = option.currentPrefab;
                         associatedCell = oldSpawnStats.AssociatedCell; 
+                        
+                        if (associatedCell != null)
+                        {
+                            GridRegistry.SetOccupied(associatedCell.transform.position, true);
+                            associatedCell.SetOccupied(true);
+                            Debug.Log($"Апгрейд здания: позиция {associatedCell.transform.position} помечена как занятая");
+                        }
                     }
+                    
+                    var upgradedRequirement = houseManager.GetHouseRequirement(option.upgradedPrefab);
+                    GameManager.Instance.totalCitizens -= upgradedRequirement.requiredCitizens;
+                    GameManager.Instance.totalEnergy -= upgradedRequirement.requiredEnergy;
+                    GameManager.Instance.money -= option.upgradeCost;
+                    totalSpentOnUpgrades += option.upgradeCost;
+                    
+                    GameManager.Instance.UpdateIncomeOnHouseUpgraded(option.currentPrefab, option.upgradedPrefab);
+                    
+                    Vector3 cellPosition = associatedCell != null ? associatedCell.transform.position : position;
+                    
                     Destroy(currentHouse);
 
                     GameObject upgradedHouse = Instantiate(option.upgradedPrefab, position, rotation);
                     currentHouse = upgradedHouse;
-
-                    var upgradedRequirement = houseManager.GetHouseRequirement(option.upgradedPrefab);
-                    GameManager.Instance.totalCitizens -= upgradedRequirement.requiredCitizens;
-                    GameManager.Instance.money -= option.upgradeCost;
-                    totalSpentOnUpgrades += option.upgradeCost;
 
                     UpdateUpgradePrice();
 
@@ -99,7 +115,15 @@ public class HouseActions : MonoBehaviour
                     if (spawnStats != null)
                     {
                         spawnStats.Initialize(originalPrefab, upgradedFromPrefab);
-                        spawnStats.AssociatedCell = associatedCell;  
+                        
+                        spawnStats.AssociatedCell = associatedCell;
+                        if (associatedCell != null)
+                        {
+                            GridRegistry.SetOccupied(cellPosition, true);
+                            associatedCell.SetOccupied(true);
+                            Debug.Log($"После апгрейда: позиция {cellPosition} снова помечена как занятая");
+                        }
+                          
                         spawnStats.PlaceHouse();  
 
                         spawnStats.UpdateHousePrice(houseCost + totalSpentOnUpgrades);
@@ -131,6 +155,17 @@ public class HouseActions : MonoBehaviour
             Debug.LogWarning("Нельзя удалить здание - это приведет к отрицательным значениям ресурсов!");
             return;
         }
+
+        GridCell associatedCell = spawnStats.AssociatedCell;
+        if (associatedCell != null)
+        {
+            associatedCell.SetOccupied(false);
+        }
+        else
+        {
+            GridRegistry.SetOccupied(currentHouse.transform.position, false);
+        }
+
         GameManager.Instance.UpdateStatsOnHouseRemoved(spawnStats.OriginalPrefab);
         GameManager.Instance.money += (int)(houseCost * 0.7);
         Destroy(statPanel);

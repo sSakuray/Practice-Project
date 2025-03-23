@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public int money;
     public int totalCitizens;
     public int totalEnergy;
+    public int totalIncome = 100; // Base income amount
     public LayerMask panelLayer;
     public bool isHouseBeingPlaced = false;
     [SerializeField] private TextMeshProUGUI quantityMoneyText;
@@ -86,6 +87,8 @@ public class GameManager : MonoBehaviour
                 {
                     totalEnergy += houseData.energy;
                 }
+                // Add income from the placed house
+                totalIncome += houseData.income;
             }
         }
     }
@@ -108,11 +111,15 @@ public class GameManager : MonoBehaviour
                     if (originalHouseData != null)
                     {
                         totalCitizens -= (originalHouseData.citizens + houseData.citizens);
+                        // Remove income from both the upgraded and original house
+                        totalIncome -= (originalHouseData.income + houseData.income);
                     }
                 }
                 else
                 {
                     totalCitizens -= houseData.citizens;
+                    // Remove income from the house
+                    totalIncome -= houseData.income;
                 }
                 totalCitizens += houseRequirement.requiredCitizens;
                 totalEnergy -= houseData.energy;
@@ -130,12 +137,29 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void UpdateIncomeOnHouseUpgraded(GameObject originalPrefab, GameObject upgradedPrefab)
+    {
+        HouseManager houseManager = FindObjectOfType<HouseManager>();
+        if (houseManager != null)
+        {
+            var originalHouseData = houseManager.GetHouseData(originalPrefab);
+            var upgradedHouseData = houseManager.GetHouseData(upgradedPrefab);
+            
+            if (originalHouseData != null && upgradedHouseData != null)
+            {
+                // Remove original house income and add upgraded house income
+                totalIncome -= originalHouseData.income;
+                totalIncome += upgradedHouseData.income;
+            }
+        }
+    }
+
     private IEnumerator AccumulateMoney()
     {
         while (true)
         {
             yield return new WaitForSeconds(IncomeWaitInSeconds);
-            money += 100;
+            money += totalIncome; // Now using totalIncome instead of fixed value
         }
     }
 }
