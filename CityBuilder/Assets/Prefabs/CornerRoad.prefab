@@ -62,6 +62,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7ba6b2bf015f3c241bf0e5cb453c91bc, type: 3}
       insertIndex: -1
       addedObject: {fileID: -7656655671373361242}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7ba6b2bf015f3c241bf0e5cb453c91bc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -7532567746935439537}
   m_SourcePrefab: {fileID: 100100000, guid: 7ba6b2bf015f3c241bf0e5cb453c91bc, type: 3}
 --- !u!1 &4597341443649809608 stripped
 GameObject:
@@ -104,3 +107,18 @@ MonoBehaviour:
   statPanelPrefab: {fileID: 7258353760615933375, guid: 2f5eab5c9cc4a904bb3e819e2b7103ac, type: 3}
   statsPanelAnim: {fileID: 0}
   originalPrefab: {fileID: 0}
+  upgradedFromPrefab: {fileID: 0}
+--- !u!114 &-7532567746935439537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4597341443649809608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9784073b141e954a97ef06bbf7b87b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arrowPrefab: {fileID: 3239312975179512123, guid: bbfa0f1caaa3e9147a534673e031edd3, type: 3}
+  arrowOffset: {x: 0, y: 58.9, z: 0}

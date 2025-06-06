@@ -5,11 +5,45 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("Мигание UI")]
+    public UnityEngine.UI.Image[] upgradeWarningImages; 
+    public float warningBlinkDuration = 1.5f;
+    public float warningBlinkInterval = 0.2f;
+    private Coroutine warningBlinkCoroutine;
+
+    public void ShowUpgradeWarning(bool noCitizens, bool noEnergy, bool noMoney)
+    {
+        if (warningBlinkCoroutine != null) return;
+        warningBlinkCoroutine = StartCoroutine(BlinkUpgradeWarning(noCitizens, noEnergy, noMoney));
+    }
+
+    private IEnumerator BlinkUpgradeWarning(bool noCitizens, bool noEnergy, bool noMoney)
+    {
+        var orig = new Color[upgradeWarningImages.Length];
+        for (int i = 0; i < upgradeWarningImages.Length; i++)
+            orig[i] = upgradeWarningImages[i].color;
+
+        upgradeWarningImages[0].gameObject.SetActive(true);
+        upgradeWarningImages[1].gameObject.SetActive(true);
+        upgradeWarningImages[2].gameObject.SetActive(true);
+
+        if (noCitizens) upgradeWarningImages[0].color = Color.red;
+        if (noEnergy) upgradeWarningImages[1].color = Color.red;
+        if (noMoney) upgradeWarningImages[2].color = Color.red;
+        
+        yield return new WaitForSeconds(warningBlinkInterval);
+        
+        if (noCitizens) upgradeWarningImages[0].color = orig[0];
+        if (noEnergy) upgradeWarningImages[1].color = orig[1];
+        if (noMoney) upgradeWarningImages[2].color = orig[2];
+        warningBlinkCoroutine = null;
+    }
+
     public static GameManager Instance;
     public int money;
     public int totalCitizens;
     public int totalEnergy;
-    public int totalIncome = 100; // Base income amount
+    public int totalIncome = 100; 
     public LayerMask panelLayer;
     public bool isHouseBeingPlaced = false;
     [SerializeField] private TextMeshProUGUI quantityMoneyText;
@@ -87,7 +121,6 @@ public class GameManager : MonoBehaviour
                 {
                     totalEnergy += houseData.energy;
                 }
-                // Add income from the placed house
                 totalIncome += houseData.income;
             }
         }
@@ -111,14 +144,12 @@ public class GameManager : MonoBehaviour
                     if (originalHouseData != null)
                     {
                         totalCitizens -= (originalHouseData.citizens + houseData.citizens);
-                        // Remove income from both the upgraded and original house
                         totalIncome -= (originalHouseData.income + houseData.income);
                     }
                 }
                 else
                 {
                     totalCitizens -= houseData.citizens;
-                    // Remove income from the house
                     totalIncome -= houseData.income;
                 }
                 totalCitizens += houseRequirement.requiredCitizens;
@@ -147,7 +178,6 @@ public class GameManager : MonoBehaviour
             
             if (originalHouseData != null && upgradedHouseData != null)
             {
-                // Remove original house income and add upgraded house income
                 totalIncome -= originalHouseData.income;
                 totalIncome += upgradedHouseData.income;
             }
@@ -159,7 +189,7 @@ public class GameManager : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(IncomeWaitInSeconds);
-            money += totalIncome; // Now using totalIncome instead of fixed value
+            money += totalIncome; 
         }
     }
 }

@@ -11,8 +11,4 @@ public class GridCell : MonoBehaviour
         isOccupied = value;
         GridRegistry.SetOccupied(transform.position, value);
     }
-    
-    private void OnDestroy()
-    {
-    }
 }

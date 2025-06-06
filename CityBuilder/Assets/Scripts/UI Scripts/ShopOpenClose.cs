@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class ShopOpenClose : MonoBehaviour
 {
-    [Header("References")]
     [SerializeField] private Animator anim;
     [SerializeField] private Button OpenShopButton;
     [SerializeField] private Button CloseShopButton;

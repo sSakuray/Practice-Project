@@ -8,9 +8,10 @@ public class SpawnStats : MonoBehaviour
     [SerializeField] private Animator statsPanelAnim;    
     [SerializeField] private GameObject originalPrefab;
     [SerializeField] private GameObject upgradedFromPrefab; 
-    private static GameObject currentActiveStatPanel; 
+    public static GameObject currentActiveStatPanel; 
     private GameObject spawnedStatPanel;             
     private bool isPlaced = false;                   
+    public bool IsPlaced => isPlaced;
     private int currentHousePrice;                  
     public GridCell AssociatedCell { get; set; }       
     public GameObject OriginalPrefab => originalPrefab;
@@ -37,6 +38,11 @@ public class SpawnStats : MonoBehaviour
         {
             Destroy(currentActiveStatPanel); 
             currentActiveStatPanel = null;  
+            if (HouseArrowClick.currentArrow != null)
+            {
+                Destroy(HouseArrowClick.currentArrow);
+                HouseArrowClick.currentArrow = null;
+            }
             return; 
         }
         if (currentActiveStatPanel != null)
@@ -121,6 +127,12 @@ public class SpawnStats : MonoBehaviour
         {
             Destroy(currentActiveStatPanel);
             currentActiveStatPanel = null;
+        }
+        // Уничтожить стрелку, если она есть
+        if (HouseArrowClick.currentArrow != null)
+        {
+            Destroy(HouseArrowClick.currentArrow);
+            HouseArrowClick.currentArrow = null;
         }
     }
 }

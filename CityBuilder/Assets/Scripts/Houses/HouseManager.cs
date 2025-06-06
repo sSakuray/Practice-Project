@@ -10,16 +10,18 @@ public class HouseManager : MonoBehaviour
         public GameObject housePrefab;
         public string houseName;
         public int citizens;
-        public int energy;   
-        public int income;  
+        public int energy;
+        public int income;
     }
+
     [System.Serializable]
     public class HouseRequirement
     {
         public GameObject housePrefab;
-        public int requiredCitizens; 
-        public int requiredEnergy;   
+        public int requiredCitizens;
+        public int requiredEnergy;
     }
+
     [SerializeField] private List<HouseData> houses;
     [SerializeField] private List<HouseRequirement> requirements;
     public HouseData GetHouseData(GameObject housePrefab)
@@ -58,7 +60,6 @@ public class HouseManager : MonoBehaviour
     {
         var houseData = GetHouseData(housePrefab);
         if (houseData == null) return false;
-
 
         return GameManager.Instance.totalCitizens - houseData.citizens >= 0 &&
                GameManager.Instance.totalEnergy - houseData.energy >= 0;

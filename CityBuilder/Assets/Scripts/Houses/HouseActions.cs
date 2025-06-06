@@ -5,11 +5,17 @@ using TMPro;
 
 public class HouseActions : MonoBehaviour
 {
+    
     [SerializeField] private Button upgradeButton;     
     [SerializeField] private Button rotateButton;      
     [SerializeField] private Button deleteButton;       
     [SerializeField] public GameObject statPanel;      
-    [SerializeField] private TextMeshProUGUI priceText;  
+    [SerializeField] private TextMeshProUGUI priceText;
+
+    [SerializeField] private TextMeshProUGUI upgradeNameText;
+    [SerializeField] private TextMeshProUGUI upgradeCitizensText;
+    [SerializeField] private TextMeshProUGUI upgradeEnergyText;
+    [SerializeField] private TextMeshProUGUI upgradeIncomeText;
     
     [System.Serializable]
     public class UpgradeOption
@@ -28,14 +34,70 @@ public class HouseActions : MonoBehaviour
         upgradeButton.onClick.AddListener(UpgradeHouse);
         rotateButton.onClick.AddListener(RotateHouse);
         deleteButton.onClick.AddListener(DeleteHouse);
+
+        var trigger = upgradeButton.gameObject.GetComponent<UnityEngine.EventSystems.EventTrigger>();
+        if (trigger == null)
+            trigger = upgradeButton.gameObject.AddComponent<UnityEngine.EventSystems.EventTrigger>();
+
+        var entryEnter = new UnityEngine.EventSystems.EventTrigger.Entry { eventID = UnityEngine.EventSystems.EventTriggerType.PointerEnter };
+        entryEnter.callback.AddListener((data) => { ShowUpgradeStats(); });
+        trigger.triggers.Add(entryEnter);
+
+        var entryExit = new UnityEngine.EventSystems.EventTrigger.Entry { eventID = UnityEngine.EventSystems.EventTriggerType.PointerExit };
+        entryExit.callback.AddListener((data) => { HideUpgradeStats(); });
+        trigger.triggers.Add(entryExit);
+
+        HideUpgradeStats();
     }
 
-    public void SetCurrentHouse(GameObject house, int cost)
+    private void ShowUpgradeStats()
+    {
+        var houseManager = FindObjectOfType<HouseManager>();
+        foreach (var option in upgradeOptions)
+        {
+            if (option.currentPrefab.name == currentHouse.name.Replace("(Clone)", "").Trim())
+            {
+                var data = houseManager.GetHouseData(option.upgradedPrefab);
+                if (data != null)
+                {
+                    if (upgradeNameText) {
+                        upgradeNameText.gameObject.SetActive(true);
+                        upgradeNameText.text = data.houseName;
+                    }
+                    if (upgradeCitizensText) {
+                        upgradeCitizensText.gameObject.SetActive(true);
+                        upgradeCitizensText.text = data.citizens > 0 ? "+" + data.citizens : "";
+                    }
+                    if (upgradeEnergyText) {
+                        upgradeEnergyText.gameObject.SetActive(true);
+                        upgradeEnergyText.text = data.energy > 0 ? "+" + data.energy : "";
+                    }
+                    if (upgradeIncomeText) {
+                        upgradeIncomeText.gameObject.SetActive(true);
+                        upgradeIncomeText.text = data.income > 0 ? "+" + data.income : "";
+                    }
+                }
+                return;
+            }
+        }
+    }
+
+    private void HideUpgradeStats()
+    {
+        if (upgradeNameText) upgradeNameText.gameObject.SetActive(false);
+        if (upgradeCitizensText) upgradeCitizensText.gameObject.SetActive(false);
+        if (upgradeEnergyText) upgradeEnergyText.gameObject.SetActive(false);
+        if (upgradeIncomeText) upgradeIncomeText.gameObject.SetActive(false);
+    }
+
+
+        public void SetCurrentHouse(GameObject house, int cost)
     {
         currentHouse = house;
         houseCost = cost;
         UpdateUpgradePrice();
     }
+
     private void UpdateUpgradePrice()
     {
         if (priceText == null || currentHouse == null)
@@ -54,6 +116,8 @@ public class HouseActions : MonoBehaviour
 
         priceText.text = "N/A";
     }
+
+
     public void UpgradeHouse()
     {
         foreach (var option in upgradeOptions)
@@ -63,10 +127,13 @@ public class HouseActions : MonoBehaviour
                 var houseManager = FindObjectOfType<HouseManager>();
                 if (houseManager == null) return;
 
-                // Проверяем наличие ресурсов
                 if (!houseManager.CanUpgradeBuilding(currentHouse, option.upgradedPrefab))
                 {
-                    Debug.LogWarning("Нехватает ресурсов для апгрейда!");
+                    var req = houseManager.GetHouseRequirement(option.upgradedPrefab);
+                    bool notEnoughCitizens = req != null && GameManager.Instance.totalCitizens < req.requiredCitizens;
+                    bool notEnoughEnergy = req != null && GameManager.Instance.totalEnergy < req.requiredEnergy;
+                    bool notEnoughMoney = GameManager.Instance.money < option.upgradeCost;
+                    GameManager.Instance.ShowUpgradeWarning(notEnoughCitizens, notEnoughEnergy, notEnoughMoney);
                     return;
                 }
                 
@@ -90,7 +157,6 @@ public class HouseActions : MonoBehaviour
                         {
                             GridRegistry.SetOccupied(associatedCell.transform.position, true);
                             associatedCell.SetOccupied(true);
-                            Debug.Log($"Апгрейд здания: позиция {associatedCell.transform.position} помечена как занятая");
                         }
                     }
                     
@@ -121,9 +187,8 @@ public class HouseActions : MonoBehaviour
                         {
                             GridRegistry.SetOccupied(cellPosition, true);
                             associatedCell.SetOccupied(true);
-                            Debug.Log($"После апгрейда: позиция {cellPosition} снова помечена как занятая");
                         }
-                          
+                        
                         spawnStats.PlaceHouse();  
 
                         spawnStats.UpdateHousePrice(houseCost + totalSpentOnUpgrades);
@@ -131,10 +196,6 @@ public class HouseActions : MonoBehaviour
                         spawnStats.SpawnStatPanel();
                     }
                     return;
-                }
-                else
-                {
-                    Debug.LogWarning("Недостаточно денег для апгрейда!");
                 }
             }
         }
@@ -144,6 +205,7 @@ public class HouseActions : MonoBehaviour
     {
         currentHouse.transform.RotateAround(currentHouse.transform.position, Vector3.up, 90);
     }
+
     public void DeleteHouse()
     {
         var houseManager = FindObjectOfType<HouseManager>();
@@ -152,7 +214,6 @@ public class HouseActions : MonoBehaviour
         SpawnStats spawnStats = currentHouse.GetComponent<SpawnStats>();
         if (spawnStats == null || !houseManager.CanSellBuilding(spawnStats.OriginalPrefab))
         {
-            Debug.LogWarning("Нельзя удалить здание - это приведет к отрицательным значениям ресурсов!");
             return;
         }
 

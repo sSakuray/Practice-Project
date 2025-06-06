@@ -16,13 +16,8 @@ public class CameraButton : MonoBehaviour
         if (click == 0)
         {
             click = 0;
-            //mainCamera.transform.rotation = Quaternion.Euler(targetRotation);
             rotationPoint.transform.position = targetPosition;
         }
-        //else 
-        //{
-        //    click = 0;
-        //    mainCamera.transform.rotation = Quaternion.Euler(targetRotation2);
-        //}
+
     }
 }

@@ -151,7 +151,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6378105923082963381
 RectTransform:
   m_ObjectHideFlags: 0
@@ -285,7 +285,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8620812185317471378
 RectTransform:
   m_ObjectHideFlags: 0
@@ -553,7 +553,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &793767313427808014
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1356,7 +1356,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5657743178066448550
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1789,7 +1789,7 @@ GameObject:
   - component: {fileID: 8415784014666066014}
   m_Layer: 5
   m_Name: BuildingInfo
-  m_TagString: Untagged
+  m_TagString: StatsCard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1871,6 +1871,10 @@ MonoBehaviour:
   deleteButton: {fileID: 2317059898418946203}
   statPanel: {fileID: 7258353760615933375}
   priceText: {fileID: 6355644108900650348}
+  upgradeNameText: {fileID: 8941896845174470926}
+  upgradeCitizensText: {fileID: 8599035710953953351}
+  upgradeEnergyText: {fileID: 7808851075691472339}
+  upgradeIncomeText: {fileID: 3905568632556047336}
   upgradeOptions:
   - currentPrefab: {fileID: 939303671511055434, guid: 8940195d867bc744e9c383c2c803a49d, type: 3}
     upgradedPrefab: {fileID: 1076019684008784579, guid: 06e25c97c43d2264980084f9370fea96, type: 3}
